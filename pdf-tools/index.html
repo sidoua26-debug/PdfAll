@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Offline PDF Studio (Local-only Demo)</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Offline PDF Studio</h1>
+      <p>
+        Local-only browser processing demo. No runtime CDN imports. Current v1 supports merge/split/rotate logic and
+        <strong>Verified Destructive Redaction</strong> through rasterized page rebuild on redacted pages.
+      </p>
+      <p class="limitations">
+        Scope note: metadata sanitizer currently targets known Info dictionary fields and documents unsupported structures.
+      </p>
+
+      <div role="tablist" aria-label="PDF tools" class="tabs">
+        <button role="tab" id="tab-merge" aria-controls="panel-merge" aria-selected="true">Merge / Split / Rotate</button>
+        <button role="tab" id="tab-redact" aria-controls="panel-redact" aria-selected="false">Verified Destructive Redaction</button>
+        <button role="tab" id="tab-metadata" aria-controls="panel-metadata" aria-selected="false">Metadata Sanitizer / Optimizer</button>
+      </div>
+
+      <section role="tabpanel" id="panel-merge" aria-labelledby="tab-merge">Tool wiring placeholder for merge/split/rotate.</section>
+      <section role="tabpanel" id="panel-redact" aria-labelledby="tab-redact" hidden>Tool wiring placeholder for redaction with fail-closed verification.</section>
+      <section role="tabpanel" id="panel-metadata" aria-labelledby="tab-metadata" hidden>Tool wiring placeholder for metadata inspection and sanitization.</section>
+
+      <pre id="status" aria-live="polite"></pre>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

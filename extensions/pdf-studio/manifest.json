@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Offline PDF Studio",
+  "version": "0.1.0",
+  "description": "Local-only PDF tools with Verified Destructive Redaction",
+  "permissions": [],
+  "host_permissions": [],
+  "action": {
+    "default_title": "Offline PDF Studio"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["studio.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
