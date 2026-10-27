@@ -1,0 +1,12 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+}
+body { margin: 0; background: #fafafa; color: #1c1c1c; }
+main { max-width: 960px; margin: 0 auto; padding: 1rem; }
+.tabs { display: flex; gap: 0.5rem; margin: 1rem 0; }
+[role='tab'] { padding: 0.6rem 0.9rem; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+[role='tab'][aria-selected='true'] { border-color: #0b60d0; color: #0b60d0; }
+section[role='tabpanel'] { background: #fff; border: 1px solid #ddd; padding: 1rem; }
+.limitations { color: #7a4300; }
+pre { background: #111; color: #9be564; padding: 0.75rem; min-height: 5rem; overflow: auto; }
