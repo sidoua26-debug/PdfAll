@@ -10,6 +10,7 @@ const samplePath = new URL('../fixtures/sample.pdf', import.meta.url);
 test('pdf.js browser renderer path returns PNG bytes when canvas APIs are available', async (t) => {
   if (typeof OffscreenCanvas !== 'function' && typeof document === 'undefined') {
     t.skip('No browser-compatible canvas API available in this runtime');
+    return;
   }
 
   const sample = await readFile(samplePath);
@@ -22,6 +23,7 @@ test('pdf.js browser renderer path returns PNG bytes when canvas APIs are availa
 test('real renderer redaction path preserves unredacted page text when available', async (t) => {
   if (typeof OffscreenCanvas !== 'function' && typeof document === 'undefined') {
     t.skip('No browser-compatible canvas API available in this runtime');
+    return;
   }
 
   const sample = await readFile(samplePath);

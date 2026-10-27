@@ -39,7 +39,7 @@ test('worker protocol supports request IDs and progress events', async () => {
   const controller = new WorkerController(fakeWorker);
 
   const progresses = [];
-  const result = await controller.request('ping', { x: 1 }, { onProgress: (p) => progresses.push(p.phase) });
+  const result = await controller.request('ping', { x: 1 }, { onProgress: (p) => progresses.push(p.stage) });
 
   assert.deepEqual(progresses, ['start']);
   assert.equal(result.ok, true);
