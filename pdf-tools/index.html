@@ -14,8 +14,18 @@
         <strong>Verified Destructive Redaction</strong> through rasterized page rebuild on redacted pages.
       </p>
       <p class="limitations">
-        Scope note: metadata sanitizer currently targets known Info dictionary fields and documents unsupported structures.
+        Scope note: redaction v1 rebuilds selected pages and verifies known leakage surfaces. It does not claim complete
+        forensic object-graph scrubbing of all PDF internals.
       </p>
+      <section class="file-section" aria-labelledby="source-file-heading">
+        <h2 id="source-file-heading">Source PDF</h2>
+        <label for="source-file-input">Choose a local PDF file</label>
+        <input id="source-file-input" type="file" accept="application/pdf,.pdf" />
+        <div id="drop-zone" tabindex="0" role="button" aria-label="Drop PDF file here or press Enter to choose file">
+          Drop a PDF here
+        </div>
+        <p id="source-file-name" class="file-name">No source PDF selected.</p>
+      </section>
 
       <div role="tablist" aria-label="PDF tools" class="tabs">
         <button role="tab" id="tab-merge" aria-controls="panel-merge" aria-selected="true">Merge / Split / Rotate</button>
@@ -23,9 +33,53 @@
         <button role="tab" id="tab-metadata" aria-controls="panel-metadata" aria-selected="false">Metadata Sanitizer / Optimizer</button>
       </div>
 
-      <section role="tabpanel" id="panel-merge" aria-labelledby="tab-merge">Tool wiring placeholder for merge/split/rotate.</section>
-      <section role="tabpanel" id="panel-redact" aria-labelledby="tab-redact" hidden>Tool wiring placeholder for redaction with fail-closed verification.</section>
-      <section role="tabpanel" id="panel-metadata" aria-labelledby="tab-metadata" hidden>Tool wiring placeholder for metadata inspection and sanitization.</section>
+      <section role="tabpanel" id="panel-merge" aria-labelledby="tab-merge" tabindex="0">
+        <h2>Merge</h2>
+        <label for="merge-files-input">PDF files to merge (in listed order)</label>
+        <input id="merge-files-input" type="file" accept="application/pdf,.pdf" multiple />
+        <button id="merge-run" type="button">Run merge</button>
+
+        <h2>Split</h2>
+        <label for="split-selection">Pages (examples: 1,3-5,8)</label>
+        <input id="split-selection" type="text" value="1" />
+        <button id="split-run" type="button">Run split</button>
+
+        <h2>Rotate</h2>
+        <label for="rotate-pages">Pages (examples: 1,3-5)</label>
+        <input id="rotate-pages" type="text" value="1" />
+        <label for="rotate-degrees">Degrees</label>
+        <select id="rotate-degrees">
+          <option value="90">90</option>
+          <option value="180">180</option>
+          <option value="270">270</option>
+        </select>
+        <button id="rotate-run" type="button">Run rotate</button>
+      </section>
+
+      <section role="tabpanel" id="panel-redact" aria-labelledby="tab-redact" hidden tabindex="0">
+        <h2>Verified Destructive Redaction (v1)</h2>
+        <p>
+          Select pages to destructively rebuild from rendered images. v1 checks extractable text, known metadata fields,
+          annotation/form markers, and selected unsupported active/embedded structures.
+        </p>
+        <div id="redaction-pages" class="page-grid" aria-live="polite"></div>
+        <button id="redaction-refresh" type="button">Refresh page previews</button>
+        <button id="redaction-run" type="button">Run verified destructive redaction</button>
+      </section>
+
+      <section role="tabpanel" id="panel-metadata" aria-labelledby="tab-metadata" hidden tabindex="0">
+        <h2>Metadata inspection</h2>
+        <button id="metadata-inspect" type="button">Inspect metadata</button>
+        <button id="metadata-sanitize" type="button">Sanitize known metadata fields</button>
+        <pre id="metadata-output">Metadata output will appear here.</pre>
+      </section>
+
+      <section class="output-section" aria-labelledby="output-heading">
+        <h2 id="output-heading">Output</h2>
+        <button id="cancel-current" type="button" disabled>Cancel active operation</button>
+        <a id="download-output" href="#" download="output.pdf" aria-disabled="true">Download output</a>
+        <p id="verification-status">Verification pending.</p>
+      </section>
 
       <pre id="status" aria-live="polite"></pre>
     </main>

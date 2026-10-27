@@ -1,5 +1,6 @@
 export * from './errors.mjs';
 export * from './coordinates.mjs';
+export * from './browserRenderer.mjs';
 export * from './limits.mjs';
 export * from './metadata.mjs';
 export * from './mergeSplitRotate.mjs';
@@ -7,3 +8,4 @@ export * from './pageRanges.mjs';
 export * from './redaction.mjs';
 export * from './verify.mjs';
 export * from './workerProtocol.mjs';
+export * from './workerActions.mjs';

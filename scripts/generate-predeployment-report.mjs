@@ -75,8 +75,8 @@ ${commandResults.map((r) => `- \`${r.cmd}\`: ${r.ok ? 'PASS' : 'FAIL'}`).join('\
 - Shared core source is unbundled in this PR; no production bundle emitted.
 
 ## Known limitations
-- Browser automation coverage for actual canvas/pdf.js raster rendering is deferred with a documented test seam.
 - Metadata sanitization currently targets known Info dictionary fields; unsupported structures are documented.
+- Browser UI verification still requires manual local interaction coverage beyond Node test runtime.
 
 ## Git status
 \`\`\`

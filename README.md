@@ -1,11 +1,11 @@
-# PdfAll - Offline PDF Studio (Initial PR)
+# PdfAll - Offline PDF Studio
 
-Offline PDF Studio bootstrap with a shared local-only PDF core, web demo shell, and zero-permission MV3 scaffold.
+Offline PDF Studio with a shared local-only PDF core, functional browser demo, and zero-permission MV3 scaffold.
 
 ## Structure
 
 - `src/pdf-core/`: shared merge/split/rotate, metadata, redaction, verification, worker protocol, and limits.
-- `pdf-tools/`: local demo page with accessible tabs/placeholders.
+- `pdf-tools/`: local demo page with real worker wiring, rendering, and tool controls.
 - `extensions/pdf-studio/`: MV3 scaffold (`permissions: []`, `host_permissions: []`) opening `studio.html`.
 - `tests/`: unit, integration, static scan, and deterministic fixture generation.
 
@@ -50,4 +50,22 @@ Documented in `src/pdf-core/metadata.mjs`:
 
 ## Browser/integration testing note
 
-Node tests cover core logic and worker protocol. Browser automation for full canvas/pdf.js redaction rendering is not yet wired in this PR; the `renderPageToPng` seam is the explicit TODO integration point.
+## Browser MVP functionality
+
+- Load PDFs from file picker or drag-and-drop (local-only).
+- Merge, split, and rotate through worker-backed core operations.
+- Inspect and sanitize known metadata Info fields.
+- Render page previews via local `pdfjs-dist` path and select redaction pages.
+- Run **Verified Destructive Redaction** with fail-closed verification gating: output download is enabled only on successful verification.
+- Cancellation and structured operation errors are surfaced in the status panel.
+
+## Manual browser validation steps
+
+1. Run `npm install` and `npm run test`.
+2. Open `/pdf-tools/index.html` in a local browser runtime.
+3. Load `tests/fixtures/sample.pdf`.
+4. Validate merge/split/rotate and metadata inspect/sanitize controls.
+5. Open the redaction tab, refresh previews, select page 2, run redaction, and confirm:
+   - verification reports success,
+   - download becomes enabled only after success,
+   - unredacted pages remain present.
