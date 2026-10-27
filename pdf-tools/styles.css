@@ -10,3 +10,45 @@ main { max-width: 960px; margin: 0 auto; padding: 1rem; }
 section[role='tabpanel'] { background: #fff; border: 1px solid #ddd; padding: 1rem; }
 .limitations { color: #7a4300; }
 pre { background: #111; color: #9be564; padding: 0.75rem; min-height: 5rem; overflow: auto; }
+.file-section,
+.output-section {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+#drop-zone {
+  margin-top: 0.5rem;
+  border: 2px dashed #777;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: #f4f7fb;
+}
+#drop-zone.dragging { border-color: #0b60d0; background: #eaf2ff; }
+.file-name { margin-top: 0.5rem; color: #2b2b2b; }
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+.page-card {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0.5rem;
+}
+.page-card img {
+  width: 100%;
+  display: block;
+  border: 1px solid #eee;
+}
+#metadata-output {
+  margin-top: 0.75rem;
+  background: #111;
+  color: #b8ffbd;
+}
+#download-output[aria-disabled='true'] {
+  color: #666;
+  pointer-events: none;
+  text-decoration: none;
+}

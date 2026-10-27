@@ -1,14 +1,10 @@
 import { createWorkerMessageHandler } from '../src/pdf-core/workerProtocol.mjs';
+import { createPdfWorkerHandlers } from '../src/pdf-core/workerActions.mjs';
+import { renderPdfPageToPng } from '../src/pdf-core/browserRenderer.mjs';
 
-const handlers = {
-  async ping(payload, ctx) {
-    ctx.progress({ stage: 'start' });
-    if (ctx.isCancelled()) {
-      throw new Error('Cancelled');
-    }
-    return { value: { ok: true, echo: payload } };
-  }
-};
+const handlers = createPdfWorkerHandlers({
+  renderPageToPng: renderPdfPageToPng
+});
 
 const handler = createWorkerMessageHandler(handlers);
 self.onmessage = (event) => handler(event, self.postMessage.bind(self));

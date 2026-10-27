@@ -1,4 +1,4 @@
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { getDocument } from '../../node_modules/pdfjs-dist/legacy/build/pdf.mjs';
 import { inspectMetadata } from './metadata.mjs';
 import { createError } from './errors.mjs';
 
@@ -53,9 +53,22 @@ export async function verifyRedactionOutput({ pdfBytes, redactedPages, expectedS
     throw createError('REDACTION_VERIFICATION_OBJECTS', 'Detected annotation/form structures after redaction', { hasAnnots, hasAcroForm });
   }
 
+  const unsupportedStructures = [
+    '/EmbeddedFiles',
+    '/XFA',
+    '/JavaScript',
+    '/JS',
+    '/RichMedia',
+    '/Launch',
+    '/OpenAction'
+  ].filter((token) => binaryCheck.includes(token));
+  if (unsupportedStructures.length > 0) {
+    throw createError('REDACTION_VERIFICATION_UNSUPPORTED', 'Detected unsupported active/embedded structures after redaction', { unsupportedStructures });
+  }
+
   return {
     verified: true,
-    surfacesChecked: ['extractable-text', 'metadata', 'annotations', 'forms'],
-    heuristicChecks: ['raw-byte-search /Annots /AcroForm']
+    surfacesChecked: ['extractable-text', 'metadata', 'annotations', 'forms', 'unsupported-structures'],
+    heuristicChecks: ['raw-byte-search /Annots /AcroForm /EmbeddedFiles /XFA /JavaScript /JS /RichMedia /Launch /OpenAction']
   };
 }

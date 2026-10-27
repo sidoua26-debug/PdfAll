@@ -4,10 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Offline PDF Studio Extension</title>
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+      .container { padding: 1rem; }
+      iframe { width: 100%; min-height: 90vh; border: 0; }
+      .note { color: #6d3f00; }
+    </style>
   </head>
   <body>
-    <h1>Offline PDF Studio</h1>
-    <p>This extension shell is local-only and intentionally requests zero permissions.</p>
-    <p>Load <code>/pdf-tools/index.html</code> assets into extension packaging workflow in later PRs.</p>
+    <div class="container">
+      <h1>Offline PDF Studio</h1>
+      <p class="note">This extension requests zero permissions and uses only local packaged assets.</p>
+      <iframe src="../../pdf-tools/index.html" title="Offline PDF Studio"></iframe>
+    </div>
   </body>
 </html>

@@ -37,15 +37,32 @@ export class WorkerController {
     const id = `req-${++this.seq}`;
     return new Promise((resolve, reject) => {
       const abortController = new AbortController();
+      const cleanupAbortListeners = () => {
+        signal?.removeEventListener('abort', onAbort);
+        abortController.signal.removeEventListener('abort', onAbort);
+      };
       const onAbort = () => {
         this.worker.postMessage({ type: 'cancel', id, action: 'cancel' });
+        this.pending.delete(id);
+        this.abortControllers.delete(id);
+        cleanupAbortListeners();
         reject(createError('CANCELLED', 'Operation cancelled'));
       };
 
       signal?.addEventListener('abort', onAbort, { once: true });
       abortController.signal.addEventListener('abort', onAbort, { once: true });
 
-      this.pending.set(id, { resolve, reject, onProgress });
+      this.pending.set(id, {
+        resolve: (value) => {
+          cleanupAbortListeners();
+          resolve(value);
+        },
+        reject: (error) => {
+          cleanupAbortListeners();
+          reject(error);
+        },
+        onProgress
+      });
       this.abortControllers.set(id, abortController);
       this.worker.postMessage({ type: 'request', id, action, payload }, transfer);
     });
